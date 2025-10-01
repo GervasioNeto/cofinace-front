@@ -24,15 +24,16 @@ export const api = {
       return response.json();
     },
     
-    getUserTransactions: async (userId: string): Promise<TransactionDTO[]> => {
-      const response = await fetch(`${API_BASE_URL}/users/${userId}/transactions`);
-      return response.json();
+  getUserTransactions: async (userId: string, groupId: string): Promise<TransactionDTO[]> => {
+    const response = await fetch(`${API_BASE_URL}/users/${userId}/groups/${groupId}/transactions`);
+    if (!response.ok) throw new Error('Erro ao buscar transações do usuário');
+    return response.json();
     },
   },
   
   groups: {
-    create: async (data: CreateGroupDTO): Promise<GroupDTO> => {
-      const response = await fetch(`${API_BASE_URL}/groups`, {
+    create: async (data: CreateGroupDTO, userId: string): Promise<GroupDTO> => {
+      const response = await fetch(`${API_BASE_URL}/groups/${userId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
@@ -58,6 +59,12 @@ export const api = {
     
     getGroupTransactions: async (groupId: string): Promise<TransactionDTO[]> => {
       const response = await fetch(`${API_BASE_URL}/groups/${groupId}/transactions`);
+      return response.json();
+    },
+
+    getGroupById: async (groupId: string): Promise<GroupDTO> => {
+      const response = await fetch(`${API_BASE_URL}/groups/${groupId}`);
+      if (!response.ok) throw new Error('Erro ao buscar grupo');
       return response.json();
     },
     
