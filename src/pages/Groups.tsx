@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { api } from '@/services/api';
 import { toast } from 'sonner';
 import { Plus, Users, Wallet } from 'lucide-react';
+import { GroupDTO } from '@/types';
 
 const Groups = () => {
   const navigate = useNavigate();
@@ -39,16 +40,28 @@ const Groups = () => {
       setLoading(false);
     }
   };
+
+const loadGroupId = async (groupId: string) => {
+  try {
+    const data = await api.groups.getGroupById(groupId);
+
+    setGroups(prevGroups => {
+    return prevGroups.map(g => g.id === groupId ? data : g);
+  });
+  } catch (error) {
+    toast.error('Erro ao carregar grupo');
+  }
+};
   
   const handleCreateGroup = async (e: React.FormEvent) => {
     e.preventDefault();
     setCreating(true);
-    
     try {
+
       await api.groups.create({
         name: newGroupName,
-        description: newGroupDescription,
-      });
+        description: newGroupDescription
+      }, String(currentUser.id));
       
       toast.success('Grupo criado com sucesso!');
       setIsDialogOpen(false);
