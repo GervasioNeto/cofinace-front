@@ -41,17 +41,17 @@ const Groups = () => {
     }
   };
 
-const loadGroupId = async (groupId: string) => {
-  try {
-    const data = await api.groups.getGroupById(groupId);
+  const loadGroupId = async (groupId: string) => {
+    try {
+      const data = await api.groups.getGroupById(groupId);
 
-    setGroups(prevGroups => {
-    return prevGroups.map(g => g.id === groupId ? data : g);
-  });
-  } catch (error) {
-    toast.error('Erro ao carregar grupo');
-  }
-};
+      setGroups(prevGroups => {
+      return prevGroups.map(g => g.id === groupId ? data : g);
+    });
+    } catch (error) {
+      toast.error('Erro ao carregar grupo');
+    }
+  };
   
   const handleCreateGroup = async (e: React.FormEvent) => {
     e.preventDefault();

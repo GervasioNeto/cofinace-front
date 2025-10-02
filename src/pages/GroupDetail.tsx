@@ -143,6 +143,8 @@ const GroupDetail = () => {
     if (!groupId || !currentUser) return;
     
     try {
+      console.log("currentUser:", currentUser);
+console.log("userId enviado:", currentUser.id)
       await api.transactions.create(groupId, {
         description: transactionDescription,
         amount: parseFloat(transactionAmount),
