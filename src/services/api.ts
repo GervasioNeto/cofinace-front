@@ -111,6 +111,7 @@ export const api = {
     },
     
     update: async (transactionId: string, data: Partial<CreateTransactionDTO>): Promise<TransactionDTO> => {
+      console.log('Updating transaction:', transactionId, 'with data:', data);
       const response = await fetch(`${API_BASE_URL}/transactions/${transactionId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -120,6 +121,7 @@ export const api = {
     },
     
     delete: async (transactionId: string): Promise<void> => {
+      console.log('Deleting transaction:', transactionId);
       await fetch(`${API_BASE_URL}/transactions/${transactionId}`, {
         method: 'DELETE',
       });
