@@ -27,9 +27,9 @@ export const api = {
       return response.json();
     },
     
-  getUserTransactions: async (userId: string, groupId: string): Promise<TransactionDTO[]> => {
-    console.log('Fetching transactions for user:', userId, 'in group:', groupId);
-    const response = await fetch(`${API_BASE_URL}/users/${userId}/groups/${groupId}/transactions`);
+  getUserTransactions: async (userId: string): Promise<TransactionDTO[]> => {
+    console.log('Fetching transactions for user:', userId, 'in group:');
+    const response = await fetch(`${API_BASE_URL}/users/${userId}/transactions`);
     if (!response.ok) throw new Error('Erro ao buscar transações do usuário');
     return response.json();
     },
