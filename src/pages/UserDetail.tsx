@@ -14,6 +14,7 @@ const UserDetail = () => {
   const navigate = useNavigate();
   const { currentUser } = useStore();
   const [user, setUser] = useState<UserDTO | null>(null);
+  const [selectedUser, setSelectedUser] = useState<UserDTO | null>(null);
   const [userGroups, setUserGroups] = useState<GroupDTO[]>([]);
   const [userTransactions, setUserTransactions] = useState<TransactionDTO[]>([]);
   const [loading, setLoading] = useState(true);
@@ -34,14 +35,12 @@ const UserDetail = () => {
     if (!userId) return;
     
     try {
-      const [allUsers, groups, transactions] = await Promise.all([
-        api.users.getAll(),
+      const [selectedUser, groups, transactions] = await Promise.all([
+        api.users.getUserById(userId),
         api.users.getUserGroups(userId),
         api.users.getUserTransactions(userId),
       ]);
-      
-      const foundUser = allUsers.find(u => u.id === userId);
-      setUser(foundUser || null);
+      setSelectedUser(selectedUser)
       setUserGroups(groups);
       setUserTransactions(transactions);
     } catch (error) {
@@ -71,7 +70,7 @@ const UserDetail = () => {
     );
   }
   
-  if (!user) {
+  if (!selectedUser) {
     return (
       <Layout>
         <Card>
@@ -94,10 +93,10 @@ const UserDetail = () => {
             <ArrowLeft className="w-5 h-5" />
           </Button>
           <div>
-            <h2 className="text-3xl font-bold">{user.name}</h2>
+            <h2 className="text-3xl font-bold">{selectedUser?.name}</h2>
             <div className="flex items-center gap-2 text-muted-foreground">
               <Mail className="w-4 h-4" />
-              <p>{user.email}</p>
+              <p>{selectedUser?.email}</p>
             </div>
           </div>
         </div>

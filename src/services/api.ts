@@ -14,6 +14,12 @@ export const api = {
       });
       return response.json();
     },
+
+      getUserById: async (userId: string): Promise<UserDTO> => {
+      console.log('Fetching user by ID:', userId);
+      const response = await fetch(`${API_BASE_URL}/users/${userId}`);
+      return response.json();
+    },
     
     getAll: async (): Promise<UserDTO[]> => {
       console.log('Fetching all users');
