@@ -52,10 +52,14 @@ export const Layout = ({ children }: LayoutProps) => {
             <div className="flex items-center gap-4">
               {currentUser ? (
                 <>
+                 <Link to="/profile">
+                 <Button variant= "outline" className="gap-3 p-5">
                   <div className="text-sm">
                     <p className="font-medium text-foreground">{currentUser.name}</p>
                     <p className="text-muted-foreground text-xs">{currentUser.email}</p>
                   </div>
+                  </Button>
+                  </Link>
                   <Button
                     variant="outline"
                     size="sm"
