@@ -28,6 +28,7 @@ const GroupDetail = () => {
   console.log('groups from store:', groups);
   console.log('Initial group state:', group);
   console.log('groupId from params:', groupId);
+  console.log(groupId, typeof groupId);
   const [users, setUsers] = useState<UserDTO[]>([]);
   const [allUsers, setAllUsers] = useState<UserDTO[]>([]);
   const [transactions, setTransactions] = useState<TransactionDTO[]>([]);
@@ -73,9 +74,10 @@ const GroupDetail = () => {
       
       setUsers(groupUsers);
       setTransactions(groupTransactions);
+      console.log('groupTransactions:', groupTransactions); 
       setAllUsers(allUsersData);
       
-      const currentGroup = groups.find(g => g.id === groupId);
+      const currentGroup = groups.find(g => g.id === numericGroupId);
       if (currentGroup) {
         setGroup(currentGroup);
         setEditName(currentGroup.name);
@@ -144,7 +146,7 @@ const GroupDetail = () => {
     
     try {
       console.log("currentUser:", currentUser);
-console.log("userId enviado:", currentUser.id)
+      console.log("userId enviado:", currentUser.id)
       await api.transactions.create(groupId, {
         description: transactionDescription,
         amount: parseFloat(transactionAmount),
