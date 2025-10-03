@@ -1,4 +1,5 @@
 # SplitMoney - Sistema de Controle de Gastos em Grupo
+a
 
 Sistema moderno e intuitivo para gerenciar despesas compartilhadas e transações em grupo, desenvolvido com React + TypeScript.
 
