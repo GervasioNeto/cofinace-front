@@ -50,8 +50,6 @@ const Login = () => {
   const handleCreateUser = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // eslint-disable-next-line no-debugger
-debugger;
     try {
       const newUser = await api.users.create({
         name: newUserName,
@@ -157,7 +155,7 @@ debugger;
                 <Label htmlFor="senha">Senha</Label>
                 <Input
                   id="senha"
-                  type="senha"
+                  type="password"
                   value={newUserPassword}
                   onChange={(e) => setNewUserPassword(e.target.value)}
                   placeholder="Digite sua senha"

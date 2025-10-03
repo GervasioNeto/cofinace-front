@@ -12,6 +12,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const { currentUser, groups, setGroups, transactions, setTransactions } = useStore();
   const [loading, setLoading] = useState(true);
+  console.log(useStore.getState());
   
   useEffect(() => {
     if (!currentUser) {

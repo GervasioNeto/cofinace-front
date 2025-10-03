@@ -21,7 +21,14 @@ const GroupDetail = () => {
   const store = useStore();
   const { currentUser, groups, updateGroup } = store;
   const deleteGroupFromStore = store.deleteGroup;
-  const [group, setGroup] = useState(groups.find(g => g.id === groupId));
+  const numericGroupId = Number(groupId);
+  const [group, setGroup] = useState(
+    groups.find(g => g.id === numericGroupId)
+  );
+  console.log('groups from store:', groups);
+  console.log('Initial group state:', group);
+  console.log('groupId from params:', groupId);
+  console.log(groupId, typeof groupId);
   const [users, setUsers] = useState<UserDTO[]>([]);
   const [allUsers, setAllUsers] = useState<UserDTO[]>([]);
   const [transactions, setTransactions] = useState<TransactionDTO[]>([]);
@@ -67,9 +74,10 @@ const GroupDetail = () => {
       
       setUsers(groupUsers);
       setTransactions(groupTransactions);
+      console.log('groupTransactions:', groupTransactions); 
       setAllUsers(allUsersData);
       
-      const currentGroup = groups.find(g => g.id === groupId);
+      const currentGroup = groups.find(g => g.id === numericGroupId);
       if (currentGroup) {
         setGroup(currentGroup);
         setEditName(currentGroup.name);
@@ -137,6 +145,8 @@ const GroupDetail = () => {
     if (!groupId || !currentUser) return;
     
     try {
+      console.log("currentUser:", currentUser);
+      console.log("userId enviado:", currentUser.id)
       await api.transactions.create(groupId, {
         description: transactionDescription,
         amount: parseFloat(transactionAmount),
@@ -226,8 +236,8 @@ const GroupDetail = () => {
       </Layout>
     );
   }
-  
-  if (!group) {
+
+  if (!numericGroupId) {
     return (
       <Layout>
         <Card>
