@@ -28,6 +28,7 @@ const Groups = () => {
       return;
     }
     loadGroups();
+    loadGroupsWithTransactions();
   }, [currentUser, navigate]);
   
   const loadGroups = async () => {
@@ -41,17 +42,24 @@ const Groups = () => {
     }
   };
 
-  const loadGroupId = async (groupId: string) => {
-    try {
-      const data = await api.groups.getGroupById(groupId);
+const loadGroupsWithTransactions = async () => {
+  try {
+    const groupsData = await api.groups.getAll();
 
-      setGroups(prevGroups => {
-      return prevGroups.map(g => g.id === groupId ? data : g);
-    });
-    } catch (error) {
-      toast.error('Erro ao carregar grupo');
-    }
-  };
+    const groupsWithTx = await Promise.all(
+      groupsData.map(async (g) => {
+        const tx = await api.groups.getGroupTransactions(g.id);
+        return { ...g, transactions: tx }; 
+      })
+    );
+
+    setGroups(groupsWithTx);
+  } catch (error) {
+    toast.error('Erro ao carregar grupos');
+  } finally {
+    setLoading(false);
+  }
+};
   
   const handleCreateGroup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -68,6 +76,7 @@ const Groups = () => {
       setNewGroupName('');
       setNewGroupDescription('');
       loadGroups();
+      loadGroupsWithTransactions();
     } catch (error) {
       toast.error('Erro ao criar grupo');
     } finally {
