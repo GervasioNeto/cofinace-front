@@ -39,6 +39,16 @@ export const api = {
     if (!response.ok) throw new Error('Erro ao buscar transações do usuário');
     return response.json();
     },
+
+  update: async (userId: string, data: Partial<CreateUserDTO>): Promise<UserDTO> => {
+    console.log('Updating group:', userId, 'with data:', data);
+    const response = await fetch(`${API_BASE_URL}/users/${userId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    return response.json();
+    },
   },
   
   groups: {
