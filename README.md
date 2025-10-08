@@ -5,7 +5,6 @@ Sistema moderno e intuitivo para gerenciar despesas compartilhadas e transaçõe
 ## 🚀 Funcionalidades
 
 ### 👥 Gestão de Usuários
-- Listar todos os usuários cadastrados
 - Criar novos usuários
 - Visualizar grupos e transações de cada usuário
 - Mock de login (selecione ou crie um usuário para "logar")
